@@ -1,7 +1,6 @@
 <?php
 
 /* Oson payment connection class */
-/* author: https://ktscript.ru   */
 
 class ICExchanger {
 
@@ -26,11 +25,8 @@ class ICExchanger {
 
     if (is_array($params_post)) {       
     	curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS,  json_encode(array_merge($params_post, ['merchant_id' => $this->merchant_id])));
+        curl_setopt($ch, CURLOPT_POSTFIELDS,  json_encode(array_merge($params_post, ['merchant_id' => $this->merchant_id])));
     } 
-
-    error_log($this->url . $method );
-    error_log(json_encode($params_post));
 
     $headers = [
         'Accept: application/json',
@@ -54,33 +50,16 @@ class ICExchanger {
     curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     
     $response = curl_exec($ch);
-    $errno = curl_errno($ch);
+    $this->errno = curl_errno($ch);
     $info = curl_getinfo($ch);
     curl_close($ch);
 
-    $result = json_decode($response);
-    if ($errno > 0 || $result->error_code > 0 ) {
-      $this->errno = $errno;
-      error_log('1:'.$errno .' :: '.$response.' :: '.serialize( $info ));
-      //throw new Exception('1:'.$errno .' :: '.$response.' :: '.serialize( $info ));
-    } 
-
-    return $result;
+    if ($this->errno) {
+	error_log("Answer : {$this->errno} : {$response} : " . json_encode($info));
+	error_log("Params: {$this->url} : {$this->merchant_id} : {$this->token}");	
+    }
+    
+    return json_decode($response);
   }
   
-  private function parse_array($var) {
-    if(is_string($var)){
-      $r = json_decode($var);
-      if (is_array($r)){
-        return $r;
-      }
-      if (is_object($r)){
-        return (array)$r;
-      }
-      $var = preg_match("/\[.+\]/", $var, $m) ? $m[0] : null;
-      return $var === null ? array() : json_decode($var);
-    }
-
-    return is_array($var) ? $var : (is_object($var) ? (array)$var : array());
-  }
 }

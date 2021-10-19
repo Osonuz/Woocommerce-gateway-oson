@@ -2,14 +2,14 @@
 /**
  * Plugin Name: WooCommerce Oson Gateway
  * Description: Official OSON payment system plug-in for Woocommerce
- * Author: ktscript
- * Author URI: http://www.ktscript.ru
- * Version: 1.0.0
+ * Author: Oson
+ * Author URI: https://oson.uz/
+ * Version: 1.0.1
  * Text Domain: wc-gateway-oson
  * Domain Path: /i18n/languages/
  *
  * @package   WC-Gateway-Oson
- * @author    ktscript
+ * @author    Oson
  * @category  Admin
  * @copyright Copyright (c) 2021 
  *
@@ -131,7 +131,7 @@ function wc_oson_gateway_init() {
 				'title' => array(
 					'title'       => __( 'Заголовок', 'wc-gateway-oson' ),
 					'type'        => 'text',
-					'description' => __( 'Наименование шлюза оплаты на странице checkout', 'wc-oson-apikeypay' ),
+					'description' => __( 'Наименование шлюза оплаты на странице checkout', 'wc-gateway-oson' ),
 					'default'     => __( 'Oson Payment', 'wc-gateway-oson' ),
 					'desc_tip'    => true,
 				),
@@ -234,51 +234,6 @@ function wc_oson_gateway_init() {
 			return $query;
 		} 
 
-		/**
-		 * Функция валидации введенных клиентом данных
-		 * @access public 
-		 */
-		public function validate_fields(){
- 
-			if( empty( $_POST[ 'billing_first_name' ]) ) {
-				wc_add_notice(  'Поле с вводом имени не должно быть пустым!', 'error' );
-				return false;
-			}
-
-			if( empty( $_POST[ 'billing_last_name' ]) ) {
-				wc_add_notice(  'Поле с вводом фамилии не должно быть пустым!', 'error' );
-				return false;
-			}
-
-			if( empty( $_POST[ 'billing_address_1' ]) ) {
-				wc_add_notice(  'Поле с вводом адреса не должно быть пустым!', 'error' );
-				return false;
-			}
-
-			if( empty( $_POST[ 'billing_city' ]) ) {
-				wc_add_notice(  'Поле с вводом города не должно быть пустым!', 'error' );
-				return false;
-			}
-
-
-			if( empty( $_POST[ 'billing_postcode' ]) ) {
-				wc_add_notice(  'Поле с вводом индекса не должно быть пустым!', 'error' );
-				return false;
-			}
-
-			if( empty( $_POST[ 'billing_phone' ]) ) {
-				wc_add_notice(  'Поле с вводом телефонного номера не должно быть пустым!', 'error' );
-				return false;
-			}
-
-			if( empty( $_POST[ 'billing_email' ]) ) {
-				wc_add_notice(  'Поле с вводом электронного почтового адреса не должно быть пустым!', 'error' );
-				return false;
-			}
-
-			return true;
-		 
-		}
 	
 		/**
 		 * Вывод страницы, если заказ успешно завершен
@@ -446,8 +401,16 @@ function wc_oson_gateway_init() {
 				]
 			);
 
+			$message = "Извините. Что-то пошло не так, попробуйте немного позже повторить оплату.";
+
 			if ( isset($response->type) &&  $response->type === 'ERROR' || $api->errno > 0) { 
-				throw new Exception("Error #{$api->errno}. {$response->message}.");
+				error_log("Error #" .$api->errno . ' '.json_encode($response));
+
+				if (isset($response->message)) {
+					$message = $response->message;
+				}
+
+				throw new Exception("Ошибка #{$api->errno} : {$message}");
 			} else {
 				
 				if ($response->status === 'REGISTRED') {
@@ -462,7 +425,7 @@ function wc_oson_gateway_init() {
 					);
 
 				} else {
-					throw new Exception("Извините. Что-то пошло не так, попробуйте немного позже повторить оплату.");
+					throw new Exception($message);
 				}
 
 			}
