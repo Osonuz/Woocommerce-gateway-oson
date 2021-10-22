@@ -1,4 +1,4 @@
-# WooCommerce plugin for Payme
+# WooCommerce plugin for OSON
 
 # Установка
 
