@@ -16,7 +16,7 @@
 
 <p>Загрузите плагин в WordPress</p>
 
-<p><a target="_blank" rel="noopener noreferrer" href=""><img src="" alt="Upload plugin" style="max-width: 100%;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer" href="![upload-plugin_](https://user-images.githubusercontent.com/92983919/138640691-afc645f5-f6dc-4f93-b587-4560f001cd3c.png)"><img src="![upload-plugin_](https://user-images.githubusercontent.com/92983919/138640691-afc645f5-f6dc-4f93-b587-4560f001cd3c.png)" alt="Upload plugin" style="max-width: 100%;"></a></p>
 
 Модуль позволяет организовать оплату товаров в магазине через Oson.uz
 
