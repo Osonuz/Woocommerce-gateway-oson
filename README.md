@@ -20,7 +20,7 @@
 
 <p>...и установите его</p>
 
-<p><a target="_blank" rel="noopener noreferrer" href=""><img src="" alt="Install plugin from ZIP" style="max-width: 100%;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138671592-b4f91a0c-440f-4c81-8275-d775406a4914.png"><img src="https://user-images.githubusercontent.com/92983919/138671592-b4f91a0c-440f-4c81-8275-d775406a4914.png" alt="Install plugin from ZIP" style="max-width: 100%;"></a></p>
 
 <p>Активируйте плагин после установки</p>
 <p><a target="_blank" rel="noopener noreferrer" href="g"><img src="" alt="Activate plugin" style="max-width: 100%;"></a></p>
