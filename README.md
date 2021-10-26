@@ -52,7 +52,7 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
   
   <p>Откройте вкладку <code>Checkout</code></p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138809876-58abfc4e-0ba3-4373-9493-21a57aa3fc81.png"><img src="https://user-images.githubusercontent.com/92983919/138809876-58abfc4e-0ba3-4373-9493-21a57aa3fc81.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138810220-8c145acb-4f2b-4b38-b11f-e40ad64c123b.png"><img src="https://user-images.githubusercontent.com/92983919/138810220-8c145acb-4f2b-4b38-b11f-e40ad64c123b.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>OSON</code> и внесите необходимые данные.</p>
   
