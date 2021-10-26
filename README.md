@@ -48,15 +48,15 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
   
   <p>Откройте страницу настроек WooCommerce</p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138809748-5b274079-2e91-4d8e-8327-35305c96eba4.png"><img src="https://user-images.githubusercontent.com/92983919/138809748-5b274079-2e91-4d8e-8327-35305c96eba4.png" alt="WooCommerce Settings page" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138814681-cedc2ef2-631a-48bd-bc17-8081bff47ce0.png"><img src="https://user-images.githubusercontent.com/92983919/138814681-cedc2ef2-631a-48bd-bc17-8081bff47ce0.png" alt="WooCommerce Settings page" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>Payments</code></p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138812518-577a3280-34e2-4636-b2e9-702d3c91514b.png"><img src="https://user-images.githubusercontent.com/92983919/138812518-577a3280-34e2-4636-b2e9-702d3c91514b.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="(https://user-images.githubusercontent.com/92983919/138814700-85a19cf4-7372-4c45-b0b7-6b56bd4887c2.png"><img src="(https://user-images.githubusercontent.com/92983919/138814700-85a19cf4-7372-4c45-b0b7-6b56bd4887c2.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>OSON</code> и внесите необходимые данные.</p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138811639-9cb58486-f3cf-421f-9ece-cb77c0826027.png"><img src="https://user-images.githubusercontent.com/92983919/138811639-9cb58486-f3cf-421f-9ece-cb77c0826027.png" alt="Oson Settings" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138814707-1d600afe-92fe-43ef-9371-e50c104146a5.png"><img src="https://user-images.githubusercontent.com/92983919/138814707-1d600afe-92fe-43ef-9371-e50c104146a5.png" alt="Oson Settings" style="max-width: 100%;"></a></p>
   <p>Скопируйте ваш <code>Endpoint URL</code> и внесите его в кабинете поставщика Business OSON.</p>
   <p><a target="_blank" rel="noopener noreferrer" href=""><img src="" alt="Set Endpoint URL" style="max-width: 100%;"></a></p>
   
