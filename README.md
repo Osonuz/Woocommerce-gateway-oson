@@ -48,11 +48,11 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
   
   <p>Откройте страницу настроек WooCommerce</p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138814681-cedc2ef2-631a-48bd-bc17-8081bff47ce0.png"><img src="https://user-images.githubusercontent.com/92983919/138814681-cedc2ef2-631a-48bd-bc17-8081bff47ce0.png" alt="WooCommerce Settings page" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138814700-85a19cf4-7372-4c45-b0b7-6b56bd4887c2.png"><img src="https://user-images.githubusercontent.com/92983919/138814700-85a19cf4-7372-4c45-b0b7-6b56bd4887c2.png" alt="WooCommerce Settings page" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>Payments</code></p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href="(https://user-images.githubusercontent.com/92983919/138814700-85a19cf4-7372-4c45-b0b7-6b56bd4887c2.png"><img src="(https://user-images.githubusercontent.com/92983919/138814700-85a19cf4-7372-4c45-b0b7-6b56bd4887c2.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="(https://user-images.githubusercontent.com/92983919/138814681-cedc2ef2-631a-48bd-bc17-8081bff47ce0.png"><img src="https://user-images.githubusercontent.com/92983919/138814681-cedc2ef2-631a-48bd-bc17-8081bff47ce0.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>OSON</code> и внесите необходимые данные.</p>
   
