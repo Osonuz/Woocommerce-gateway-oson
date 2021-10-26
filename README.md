@@ -57,8 +57,6 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
   <p>Откройте вкладку <code>OSON</code> и внесите необходимые данные.</p>
   
   <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138814707-1d600afe-92fe-43ef-9371-e50c104146a5.png"><img src="https://user-images.githubusercontent.com/92983919/138814707-1d600afe-92fe-43ef-9371-e50c104146a5.png" alt="Oson Settings" style="max-width: 100%;"></a></p>
-  <p>Скопируйте ваш <code>Endpoint URL</code> и внесите его в кабинете поставщика Business OSON.</p>
-  <p><a target="_blank" rel="noopener noreferrer" href=""><img src="" alt="Set Endpoint URL" style="max-width: 100%;"></a></p>
   
 
 
