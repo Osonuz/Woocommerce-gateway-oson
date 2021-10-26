@@ -48,11 +48,11 @@ RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
   
   <p>Откройте страницу настроек WooCommerce</p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href=""><img src="" alt="WooCommerce Settings page" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138809748-5b274079-2e91-4d8e-8327-35305c96eba4.png"><img src="https://user-images.githubusercontent.com/92983919/138809748-5b274079-2e91-4d8e-8327-35305c96eba4.png" alt="WooCommerce Settings page" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>Checkout</code></p>
   
-  <p><a target="_blank" rel="noopener noreferrer" href=""><img src="" alt="Checkout Tab" style="max-width: 100%;"></a></p>
+  <p><a target="_blank" rel="noopener noreferrer" href="https://user-images.githubusercontent.com/92983919/138809876-58abfc4e-0ba3-4373-9493-21a57aa3fc81.png"><img src="https://user-images.githubusercontent.com/92983919/138809876-58abfc4e-0ba3-4373-9493-21a57aa3fc81.png" alt="Checkout Tab" style="max-width: 100%;"></a></p>
   
   <p>Откройте вкладку <code>OSON</code> и внесите необходимые данные.</p>
   
