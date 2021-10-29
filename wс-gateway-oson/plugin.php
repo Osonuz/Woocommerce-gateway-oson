@@ -392,7 +392,7 @@ function wc_oson_gateway_init() {
 					'user_account'  => $order->get_billing_email(),
 					'comment'		=> 'Payment order #'.$order_id,
 					'currency'		=> "UZS", //get_woocommerce_currency(), 
-					'amount'		=> ($woocommerce->cart->cart_contents_total + $woocommerce->cart->tax_total + $order->get_total_shipping()),
+					'amount'		=> ceil($woocommerce->cart->cart_contents_total + $woocommerce->cart->tax_total + $order->get_total_shipping()),
 					'phone'    		=> $order->get_billing_phone(),
 					'lang'			=> substr(get_locale(), 0, 2),
 					'lifetime'		=> 30,
