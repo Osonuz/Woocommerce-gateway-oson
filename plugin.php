@@ -401,16 +401,12 @@ function wc_oson_gateway_init() {
 				]
 			);
 
-			$message = "Извините. Что-то пошло не так, попробуйте немного позже повторить оплату.";
+			$message = "Извините. Что-то пошло не так, попробуйте немного позже повторить оплату или свяжитесь с нами";
 
 			if ( isset($response->type) &&  $response->type === 'ERROR' || $api->errno > 0) { 
 				error_log("Error #" .$api->errno . ' '.json_encode($response));
 
-				if (isset($response->message)) {
-					$message = $response->message;
-				}
-
-				throw new Exception("Ошибка #{$api->errno} : {$message}");
+				throw new Exception("{$message} <br><span style='font-size:10px;'>Curl error #{$api->errno} : {$api->errmsg}</span>");
 			} else {
 				
 				if ($response->status === 'REGISTRED') {
@@ -425,7 +421,7 @@ function wc_oson_gateway_init() {
 					);
 
 				} else {
-					throw new Exception($message);
+					throw new Exception("{$message} <br><span style='font-size:10px;'>Response error #{$response->error_code} : {$response->message}</span>");
 				}
 
 			}

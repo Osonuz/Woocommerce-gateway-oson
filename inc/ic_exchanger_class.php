@@ -51,12 +51,13 @@ class ICExchanger {
     
     $response = curl_exec($ch);
     $this->errno = curl_errno($ch);
+    $this->errmsg = curl_error($ch);
     $info = curl_getinfo($ch);
     curl_close($ch);
 
     if ($this->errno) {
-	error_log("Answer : {$this->errno} : {$response} : " . json_encode($info));
-	error_log("Params: {$this->url} : {$this->merchant_id} : {$this->token}");	
+    	error_log("Answer : {$this->errno} : {$response} : " . json_encode($info));
+    	error_log("Params: {$this->url} : {$this->merchant_id} : {$this->token}");	
     }
     
     return json_decode($response);
