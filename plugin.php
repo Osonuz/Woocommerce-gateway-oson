@@ -152,7 +152,7 @@ function wc_oson_gateway_init() {
 				'serverUrl'	=> array(
 					'title'       => __( 'Адрес сервера Oson', 'wc-gateway-oson' ),
 					'type'        => 'text',
-					'default'     => 'https://core.oson.uz:8443/api/',
+					'default'     => 'https://api.oson.uz/api/',
 				),
 				'merchant_id' => array(
 					'title'       => 'merchant id',
