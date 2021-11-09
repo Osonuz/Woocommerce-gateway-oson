@@ -470,7 +470,7 @@ if (!class_exists('OsonManager')) {
 
 			$sql_table = 
 					'CREATE TABLE `'.$wpdb->prefix.OSON_TABLE_MANAGER.'` (
-						`id` int(11) NOT NULL AUTO_INCREMENT,
+						`id` int(11) NOT NULL AUTO_INCREMENT KEY,
 						`order_id` mediumint(9) NOT NULL ,
 						`transaction_id` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
 						`bill_id`  mediumint(9) NOT NULL ,
