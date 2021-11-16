@@ -4,7 +4,7 @@
  * Description: Official OSON payment system plug-in for Woocommerce
  * Author: Oson
  * Author URI: https://oson.uz/
- * Version: 1.0.1
+ * Version: 1.0.2
  * Text Domain: wc-gateway-oson
  * Domain Path: /i18n/languages/
  *
@@ -245,11 +245,9 @@ function wc_oson_gateway_init() {
 			$order_id = static::$order_id;
 			$order = wc_get_order($order_id);
 			if ($order) {
-				if (!$order->has_status('pending')) {
-						if (!$order->has_status('on-hold')) {
-							$order->update_status('on-hold', __('Ожидаем поступления оплаты.', 'woocommerce'));//on-hold //processing
-						}
-						exit;
+				if (!$order->has_status('processing')) {
+					$order->update_status('pending');
+					exit;
 				} else {
 					$order->payment_complete();
 					$order->reduce_order_stock();
@@ -410,7 +408,7 @@ function wc_oson_gateway_init() {
 			} else {
 				
 				if ($response->status === 'REGISTRED') {
-					$order->update_status( 'on-hold', __( 'Ожидаем поступления оплаты.', 'wc-gateway-oson' ) );		 
+					$order->update_status('pending');		 
 					$wpdb->query( $wpdb->prepare(
 						'INSERT INTO `'.$wpdb->prefix.OSON_TABLE_MANAGER.'` (`order_id`,`bill_id`, `transaction_id`) '.
 							'values ('.$order->id.','.$response->bill_id.',\''.$response->transaction_id.'\')') );
