@@ -206,8 +206,9 @@ function wc_oson_gateway_init() {
 					
 					$order = wc_get_order($order_id);
 
-					if ($order) {
+					if ($order AND $data['status'] == 'PAID') {
 						$order->payment_complete();
+						$order->update_status('completed');
 						$order->reduce_order_stock();
 						$woocommerce->cart->empty_cart();
 	
