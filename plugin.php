@@ -11,10 +11,10 @@
  * @package   WC-Gateway-Oson
  * @author    Oson
  * @category  Admin
- * @copyright Copyright (c) 2021 
+ * @copyright Copyright (c) 2021
  *
  */
- 
+
 defined( 'ABSPATH' ) or exit;
 
 require_once dirname(__FILE__). "/inc/ic_exchanger_class.php";
@@ -39,15 +39,15 @@ add_filter( 'woocommerce_payment_gateways', 'wc_oson_add_to_gateways' );
 
 /**
  * Adds plugin page links
- * 
+ *
  * @since 1.0.0
  * @param array $links all plugin links
  * @return array $links all plugin links + our custom links (i.e., "Settings")
  */
 function wc_oson_gateway_plugin_links( $links ) {
-	
+
 	$plugin_links = array(
-		'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=oson_gateway' ) . '">' 
+		'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=oson_gateway' ) . '">'
 			. __( 'Configure', 'wc-gateway-oson' ) . '</a>'
 	);
 
@@ -77,22 +77,22 @@ function wc_oson_gateway_init() {
 		 * Constructor for the gateway.
 		 */
 		public function __construct() {
-	  
 			$intro			  = "Gateway Oson Payment";
 			$this->id                 = 'oson_gateway';
-			$this->icon               = apply_filters('woocommerce_ic_icon', '');
+            // $this->icon               = apply_filters('woocommerce_ic_icon', '');
+            $this->icon               = apply_filters( 'woocommerce_gateway_icon', plugin_dir_url(__FILE__).'\oson.png' );
 			$this->has_fields         = false;
 			$this->method_title       = __( 'Oson', 'wc-gateway-oson' );
 			$this->method_description = __( $intro, 'wc-gateway-oson' );
-		  
+
 			// Load the settings.
 			$this->init_form_fields();
 			$this->init_settings();
-		  
+
 			// Define user set variables
-			$this->title        = $this->get_option( 'title' );
-			$this->description  = $this->get_option( 'description' );
-			$this->instructions = $this->get_option( 'instructions', $this->description );
+			// $this->title        = $this->get_option( 'title' );
+			// $this->description  = $this->get_option( 'description' );
+			// $this->instructions = $this->get_option( 'instructions', $this->description );
 
 			$this->plugin_name = plugin_basename(__FILE__);
 			$this->plugin_url = trailingslashit(plugin_dir_url(__FILE__));
@@ -106,7 +106,7 @@ function wc_oson_gateway_init() {
 
 			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 			add_action( 'wp_enqueue_scripts', array(&$this, 'site_load_styles'));
-			
+
 		}
 
 		public function site_load_styles()
@@ -114,14 +114,14 @@ function wc_oson_gateway_init() {
 			wp_register_style('wc_gwoson_css', $this->plugin_url . 'css/styles.css' );
 			wp_enqueue_style('wc_gwoson_css');
 		}
-	
+
 		/**
 		 * Начальные настройки гейта
 		 */
 		public function init_form_fields() {
-	  
-			$this->form_fields = array( 
-		  
+
+			$this->form_fields = array(
+
 				'enabled' => array(
 					'title'   => __( 'Вкл./Выкл.', 'wc-gateway-oson' ),
 					'type'    => 'checkbox',
@@ -163,12 +163,12 @@ function wc_oson_gateway_init() {
 					'type'        => 'password'
 				),
 
-				
+
 			);
 		}
 
 		/**
-		 * Функция приема данных (вебхук) с сервера оплаты 
+		 * Функция приема данных (вебхук) с сервера оплаты
 		 * @access public static
 		 * @param array $query
 		 */
@@ -182,28 +182,28 @@ function wc_oson_gateway_init() {
 				$data = file_get_contents ("php://input");
 				$data = json_decode ($data, true);
 
-				$params = $wpdb->get_var($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name=%s", 
+				$params = $wpdb->get_var($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name=%s",
 					'woocommerce_oson_gateway_settings'));
 
 				if (!$params) {
 					error_log('Error configuring Oson options.');
 					return $query;
 				}
-	
+
 				preg_match_all('`"([^"]*)"`', $params, $params);
-	
+
 				$token 		 = WC_Oson_Gateway::get_next_arrval($params[1], 'token');
 				$merchant_id = WC_Oson_Gateway::get_next_arrval($params[1], 'merchant_id');
 				$instructions = WC_Oson_Gateway::get_next_arrval($params[1], 'instructions');
 
 				$parameters = "{$data['transaction_id']}:{$data['bill_id']}:{$data['status']}";
 				$signature  = hash('sha256', hash('sha256', "{$token}:{$merchant_id}").":{$parameters}");
-				
-				if ( $signature === $data['signature']) { 
-					
+
+				if ( $signature === $data['signature']) {
+
 					$order_id = $wpdb->get_var($wpdb->prepare('SELECT order_id FROM '.$wpdb->prefix.OSON_TABLE_MANAGER.
 							' WHERE transaction_id=%s', $data['transaction_id']));
-					
+
 					$order = wc_get_order($order_id);
 
 					if ($order AND $data['status'] == 'PAID') {
@@ -211,7 +211,7 @@ function wc_oson_gateway_init() {
 						$order->update_status('completed');
 						$order->reduce_order_stock();
 						$woocommerce->cart->empty_cart();
-	
+
 						if ( $instructions ) {
 							echo wpautop( wptexturize( $instructions ) );
 						}
@@ -227,15 +227,15 @@ function wc_oson_gateway_init() {
 				error_log('Ошибка! Некорректная цифровая подпись в ответе сервера или ее отсутствие!');
 
 				get_footer();
-				
+
 				exit();
 
 			}
 
 			return $query;
-		} 
+		}
 
-	
+
 		/**
 		 * Вывод страницы, если заказ успешно завершен
 		 * @access public
@@ -252,7 +252,7 @@ function wc_oson_gateway_init() {
 				} else {
 					$order->payment_complete();
 					$order->reduce_order_stock();
-			
+
 					$woocommerce->cart->empty_cart();
 
 					if ( $this->instructions ) {
@@ -261,9 +261,9 @@ function wc_oson_gateway_init() {
 				}
 
 			}
-            
+
 		}
-	
+
 		/**
 		 * Направить WC email.
 		 *
@@ -273,7 +273,7 @@ function wc_oson_gateway_init() {
 		 * @param bool $plain_text
 		 */
 		public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
-		
+
 			if ( $this->instructions && ! $sent_to_admin && $this->id === $order->payment_method && $order->has_status( 'on-hold' ) ) {
 				echo wpautop( wptexturize( $this->instructions ) ) . PHP_EOL;
 			}
@@ -288,17 +288,17 @@ function wc_oson_gateway_init() {
 		 * @param bool $plain_text
 		 */
 		public function payment_fields() {
- 
+
 			if ( $this->description ) {
 				echo wpautop( wp_kses_post( $this->description ) );
 			}
-			
+
 			ob_start();
 			?>
 				<fieldset id="wc-<?= esc_attr( $this->id ); ?>-cc-form" class="wc-credit-card-form wc-payment-form" style="background:transparent;">
-		 
+
 					<?php do_action( 'woocommerce_credit_card_form_start', $this->id ); ?>
-					
+
 					<div class="cards-field-form">
 						<svg width="231" height="55" viewBox="0 0 231 55" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 35px;">
 							<g clip-path="url(#clip0)">
@@ -321,11 +321,11 @@ function wc_oson_gateway_init() {
 							</defs>
 						</svg>
 					</div>
-					
+
 				  	<div class="clear"></div>
 
 					<?php do_action( 'woocommerce_credit_card_form_end', $this->id ); ?>
-		 
+
 					<div class="clear"></div>
 				</fieldset>
 
@@ -334,7 +334,7 @@ function wc_oson_gateway_init() {
 			ob_end_clean();
 
 			echo $answer;
-			
+
 		}
 
 		/**
@@ -344,16 +344,16 @@ function wc_oson_gateway_init() {
 		public static function get_next_arrval($array, $key) {
 			$fbreak = 0;
 			foreach ($array as $arr) {
-				
+
 				if ($fbreak) break;
 				if ($arr == $key) {
-					$fbreak ++; 
+					$fbreak ++;
 				}
 			}
-			
+
 			return $fbreak ? $arr : null;
 		 }
-				
+
 		/**
 		 * Метод процесса оплаты
 		 *
@@ -361,7 +361,7 @@ function wc_oson_gateway_init() {
 		 * @return array
 		 */
 		public function process_payment( $order_id ) {
- 
+
 			global $wpdb;
 			global $woocommerce;
 
@@ -369,10 +369,10 @@ function wc_oson_gateway_init() {
 
 			static::$order_id = $order_id;
 			$order = wc_get_order( $order_id );
-			
-			$params = $wpdb->get_var($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name=%s", 
+
+			$params = $wpdb->get_var($wpdb->prepare("SELECT option_value FROM $wpdb->options WHERE option_name=%s",
 				'woocommerce_oson_gateway_settings'));
-			
+
 			if (!$params) {
 				wc_add_notice(  'Error configuring payment parameters.', 'error' );
 				return false;
@@ -381,16 +381,16 @@ function wc_oson_gateway_init() {
 			preg_match_all('`"([^"]*)"`', $params, $params);
 
 			$api = new ICExchanger( array(
-				'serverUrl'   => 	$this->get_next_arrval($params[1], 'serverUrl'), 
-				'merchant_id' =>	$this->get_next_arrval($params[1], 'merchant_id'), 
-				'token'		  =>	$this->get_next_arrval($params[1], 'token'), 
+				'serverUrl'   => 	$this->get_next_arrval($params[1], 'serverUrl'),
+				'merchant_id' =>	$this->get_next_arrval($params[1], 'merchant_id'),
+				'token'		  =>	$this->get_next_arrval($params[1], 'token'),
 			));
 
 			$response = $api->query("invoice/create", [
 					'transaction_id'=> uniqid(),
 					'user_account'  => $order->get_billing_email(),
 					'comment'		=> 'Payment order #'.$order_id,
-					'currency'		=> "UZS", //get_woocommerce_currency(), 
+					'currency'		=> "UZS", //get_woocommerce_currency(),
 					'amount'		=> ceil($woocommerce->cart->cart_contents_total + $woocommerce->cart->tax_total + $order->get_total_shipping()),
 					'phone'    		=> $order->get_billing_phone(),
 					'lang'			=> substr(get_locale(), 0, 2),
@@ -402,18 +402,18 @@ function wc_oson_gateway_init() {
 
 			$message = "Извините. Что-то пошло не так, попробуйте немного позже повторить оплату или свяжитесь с нами";
 
-			if ( isset($response->type) &&  $response->type === 'ERROR' || $api->errno > 0) { 
+			if ( isset($response->type) &&  $response->type === 'ERROR' || $api->errno > 0) {
 				error_log("Error #" .$api->errno . ' '.json_encode($response));
 
 				throw new Exception("{$message} <br><span style='font-size:10px;'>Curl error #{$api->errno} : {$api->errmsg}</span>");
 			} else {
-				
+
 				if ($response->status === 'REGISTRED') {
-					$order->update_status('pending');		 
+					$order->update_status('pending');
 					$wpdb->query( $wpdb->prepare(
 						'INSERT INTO `'.$wpdb->prefix.OSON_TABLE_MANAGER.'` (`order_id`,`bill_id`, `transaction_id`) '.
 							'values ('.$order->id.','.$response->bill_id.',\''.$response->transaction_id.'\')') );
-					
+
 					return array(
 						'result' 	=> 'success',
 						'redirect'  	=> $response->pay_url
@@ -436,20 +436,20 @@ function wc_oson_gateway_init() {
 if (!class_exists('OsonManager')) {
 
 	class OsonManager {
-	 
+
 		public function __construct ()
-		{		
+		{
 			$this->plugin_name = plugin_basename(__FILE__);
 			register_activation_hook( $this->plugin_name, array(&$this, 'activate') );
 			register_deactivation_hook( $this->plugin_name, array(&$this, 'deactivate') );
 			register_uninstall_hook( $this->plugin_name, array(&$this, 'uninstall') );
-	
+
 		}
-	
-		public function activate() 
+
+		public function activate()
 		{
 			global $wpdb;
-			
+
 			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 			$link = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD);
@@ -467,7 +467,7 @@ if (!class_exists('OsonManager')) {
 				$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
 			}
 
-			$sql_table = 
+			$sql_table =
 					'CREATE TABLE `'.$wpdb->prefix.OSON_TABLE_MANAGER.'` (
 						`id` int(11) NOT NULL AUTO_INCREMENT KEY,
 						`order_id` mediumint(9) NOT NULL ,
@@ -479,10 +479,10 @@ if (!class_exists('OsonManager')) {
 			if ( $wpdb->get_var("show tables like '".$wpdb->prefix.OSON_TABLE_MANAGER."'") != $wpdb->prefix.OSON_TABLE_MANAGER ) {
 				dbDelta($sql_table);
 			}
-			
+
 		}
 
-		public function deactivate() 
+		public function deactivate()
 		{
 			return true;
 		}
@@ -490,7 +490,7 @@ if (!class_exists('OsonManager')) {
 		/**
 		 * Удаление плагина
 		 */
-		public static function uninstall() 
+		public static function uninstall()
 		{
 			global $wpdb;
 			$wpdb->query("DROP TABLE IF EXISTS ".$wpdb->prefix.OSON_TABLE_MANAGER);
