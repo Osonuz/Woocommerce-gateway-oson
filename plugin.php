@@ -405,7 +405,7 @@ function wc_oson_gateway_init() {
 			if ( isset($response->type) &&  $response->type === 'ERROR' || $api->errno > 0) {
 				error_log("Error #" .$api->errno . ' '.json_encode($response));
 
-				throw new Exception("{$message} <br><span style='font-size:10px;'>Curl error #{$api->errno} : {$api->errmsg}</span>");
+				throw new Exception("{$message} <br><span style='font-size:10px;'>Connection error #{$api->errno} : {$api->errmsg}</span>");
 			} else {
 
 				if ($response->status === 'REGISTRED') {
@@ -420,7 +420,7 @@ function wc_oson_gateway_init() {
 					);
 
 				} else {
-					throw new Exception("{$message} <br><span style='font-size:10px;'>Response error #{$response->error_code} : {$response->message}</span>");
+					throw new Exception("{$message} <br><span style='font-size:10px;'>Error response #{$response->error_code} : {$response->message}</span>");
 				}
 
 			}
