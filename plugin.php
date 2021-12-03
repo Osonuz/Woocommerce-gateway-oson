@@ -388,7 +388,7 @@ function wc_oson_gateway_init() {
 
 			$response = $api->query("invoice/create", [
 					'transaction_id'=> uniqid(),
-					'user_account'  => $order->get_billing_email(),
+					'user_account'  => $order->get_billing_email() ? $order->get_billing_email() : $order_id,
 					'comment'		=> 'Payment order #'.$order_id,
 					'currency'		=> "UZS", //get_woocommerce_currency(),
 					'amount'		=> ceil($woocommerce->cart->cart_contents_total + $woocommerce->cart->tax_total + $order->get_total_shipping()),
