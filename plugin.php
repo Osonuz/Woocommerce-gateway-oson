@@ -4,7 +4,7 @@
  * Description: Official OSON payment system plug-in for Woocommerce
  * Author: Oson
  * Author URI: https://oson.uz/
- * Version: 1.0.3
+ * Version: 1.0.4
  * Text Domain: wc-gateway-oson
  * Domain Path: /i18n/languages/
  *
