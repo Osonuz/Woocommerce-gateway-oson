@@ -4,7 +4,7 @@
  * Description: Official OSON payment system plug-in for Woocommerce
  * Author: Oson
  * Author URI: https://oson.uz/
- * Version: 1.0.3
+ * Version: 1.0.4
  * Text Domain: wc-gateway-oson
  * Domain Path: /i18n/languages/
  *
@@ -388,7 +388,7 @@ function wc_oson_gateway_init() {
 
 			$response = $api->query("invoice/create", [
 					'transaction_id'=> uniqid(),
-					'user_account'  => $order->get_billing_email() ? $order->get_billing_email() : $order_id,
+					'user_account'  => $order_id, //$order->get_billing_email() ? $order->get_billing_email() : $order_id,
 					'comment'		=> 'Payment order #'.$order_id,
 					'currency'		=> "UZS", //get_woocommerce_currency(),
 					'amount'		=> ceil($woocommerce->cart->cart_contents_total + $woocommerce->cart->tax_total + $order->get_total_shipping()),
