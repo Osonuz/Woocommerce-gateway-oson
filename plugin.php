@@ -4,14 +4,14 @@
  * Description: Official OSON payment system plug-in for Woocommerce
  * Author: Oson
  * Author URI: https://oson.uz/
- * Version: 1.0.5
+ * Version: 1.1.0
  * Text Domain: wc-gateway-oson
  * Domain Path: /i18n/languages/
  *
  * @package   WC-Gateway-Oson
  * @author    Oson
  * @category  Admin
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2022
  *
  */
 
@@ -90,7 +90,7 @@ function wc_oson_gateway_init() {
 			$this->init_settings();
 
 			// Define user set variables
-			// $this->title        = $this->get_option( 'title' );
+			 $this->title          = $this->get_option( 'title' );
 			// $this->description  = $this->get_option( 'description' );
 			// $this->instructions = $this->get_option( 'instructions', $this->description );
 
@@ -132,7 +132,7 @@ function wc_oson_gateway_init() {
 					'title'       => __( 'Заголовок', 'wc-gateway-oson' ),
 					'type'        => 'text',
 					'description' => __( 'Наименование шлюза оплаты на странице checkout', 'wc-gateway-oson' ),
-					'default'     => __( 'Oson Payment', 'wc-gateway-oson' ),
+					'default'     => __( 'OSON', 'wc-gateway-oson' ),
 					'desc_tip'    => true,
 				),
 				'description' => array(
